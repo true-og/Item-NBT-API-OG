@@ -210,7 +210,7 @@ Using this method the API gets copied into your plugin. Server owners don't have
 [CODE]
                 Ocelot m = (Ocelot) e.getPlayer().getWorld().spawnEntity(e.getPlayer().getLocation(), EntityType.OCELOT);
                 NBTEntity ent = new NBTEntity(m);
-                System.out.println(ent);
+                MyPlugin.getLogger(ent);
 [/CODE]
 Output:
 [CODE]

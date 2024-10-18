@@ -73,23 +73,15 @@ public class MappingsParser {
                     }
                 }
             }
-            // System.out.println(currentClass + ": " + mojangName + " -> " + unmappedName);
         }
-        System.out.println(builder);
     }
 
     public static void proccessMapping(ClassWrapper nmsWrapper, Map<ReflectionMethod, String> mappedNames) {
         for (Entry<ReflectionMethod, String> entry : mappedNames.entrySet()) {
-            if (entry.getValue() == null) {
-                System.out.println(
-                        "Missing mapping in class " + nmsWrapper.getMojangName() + " method " + entry.getKey().name());
-            } else {
-                if(!entry.getValue().equals(MojangToMapping.getMapping().get(nmsWrapper.getMojangName() + "#"
+             if(!entry.getValue().equals(MojangToMapping.getMapping().get(nmsWrapper.getMojangName() + "#"
                         + entry.getKey().getSelectedVersionInfo().name)))
                 builder.append("put(\"" + nmsWrapper.getMojangName() + "#"
                         + entry.getKey().getSelectedVersionInfo().name + "\", \"" + entry.getValue() + "\");\n");
             }
         }
-    }
-
 }

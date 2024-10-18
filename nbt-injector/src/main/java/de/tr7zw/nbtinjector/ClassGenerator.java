@@ -67,7 +67,6 @@ public class ClassGenerator {
         generated.addMethod(CtMethod.make("public NBTTagCompound readExtraCompound(NBTTagCompound root) {\n"
                 + "  NBTTagCompound compound = root.getCompound(\"" + extraDataKey + "\");\n"
                 + "  this.$extraCompound = new NBTContainer(compound);\n"
-                // + " System.out.println(\"Read: \" + root);\n"
                 + "  return root;" + "}", generated));
         generated.addMethod(CtMethod.make("public NBTTagCompound writeExtraCompound(NBTTagCompound root) {\n"
                 + "  NBTBase compound = (NBTBase) this.$extraCompound.getCompound();\n"
@@ -154,7 +153,6 @@ public class ClassGenerator {
 
         String writeMethod = "public " + writeReturn + " " + writeName + "(NBTTagCompound compound) {\n" + "  super."
                 + writeName + "(compound);\n" + "  compound = writeExtraCompound(compound);\n"
-                // + " System.out.println(\"Saved-Data: \" + compound);"
                 + "  " + (!"void".equals(writeReturn) ? "return compound;" : "") + "}";
         String readMethod = "public void " + readName + "(NBTTagCompound compound) {\n" + "  super." + readName
                 + "(compound);\n" + "  readExtraCompound(compound);\n" + "}";
@@ -185,11 +183,9 @@ public class ClassGenerator {
 
         String writeMethod = "public " + writeReturn + " " + writeName + "(NBTTagCompound compound) {\n"
                 + "  compound = writeExtraCompound(compound);\n"
-                // + " System.out.println(\"Save: \" +compound);\n"
                 + "  " + (!"void".equals(writeReturn) ? "return " : "") + "super." + writeName + "(compound);\n" + "}";
         String readMethod = "public void " + readName + "(NBTTagCompound compound) {\n" + "  super." + readName
                 + "(compound);\n" + "  readExtraCompound(compound);\n"
-                // + " System.out.println(\"Read: \" +compound);\n"
                 + "}";
         return wrapNbtClass(classPool, originalClass, writeMethod, readMethod, extraDataKey);
     }
