@@ -5,6 +5,7 @@ A soft fork of [Item-NBT-API](https://github.com/tr7zw/Item-NBT-API) maintained 
 Changes over Item-NBT-API:
 
 - It builds.
+- Removed log4j.
 
 How to build:
 
