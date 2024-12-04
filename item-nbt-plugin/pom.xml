@@ -16,11 +16,11 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
-	    <groupId>com.mojang</groupId>
-	    <artifactId>datafixerupper</artifactId>
-	    <version>4.0.26</version>
-	    <scope>provided</scope>
-	</dependency>
+      <groupId>com.mojang</groupId>
+      <artifactId>datafixerupper</artifactId>
+      <version>4.0.26</version>
+      <scope>provided</scope>
+    </dependency>
   </dependencies>
   <build>
     <resources>
