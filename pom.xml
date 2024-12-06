@@ -85,26 +85,6 @@
       </resource>
     </resources>
     <plugins>
-      <!-- maven-antrun-plugin configuration -->
-      <plugin>
-        <artifactId>maven-antrun-plugin</artifactId>
-        <version>3.1.0</version>
-        <inherited>false</inherited>
-        <executions>
-          <execution>
-            <id>copy-jar</id>
-            <goals>
-              <goal>run</goal>
-            </goals>
-            <phase>package</phase>
-            <configuration>
-              <target>
-                <copy file="${project.basedir}/item-nbt-plugin/target/Item-NBT-API-OG-${project.version}.jar" overwrite="true" todir="${project.build.directory}"></copy>
-              </target>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
       <!-- maven-compiler-plugin configuration -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>

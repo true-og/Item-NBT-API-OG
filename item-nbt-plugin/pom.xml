@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0                              http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
+
   <parent>
     <groupId>de.tr7zw</groupId>
     <artifactId>item-nbt-parent</artifactId>
     <version>2.13.1</version>
   </parent>
+
   <artifactId>Item-NBT-API-OG</artifactId>
   <packaging>jar</packaging>
+  <name>Item-NBT-API-OG</name>
+
   <dependencies>
     <dependency>
       <groupId>de.tr7zw</groupId>
@@ -22,14 +26,42 @@
       <scope>provided</scope>
     </dependency>
   </dependencies>
+
   <build>
+    <!-- Ensure the final artifact name is what you're expecting to copy -->
+    <finalName>Item-NBT-API-OG-${project.version}</finalName>
+
     <resources>
       <resource>
         <filtering>true</filtering>
         <directory>src/main/resources</directory>
       </resource>
     </resources>
+
     <plugins>
+      <!-- Transplanted maven-antrun-plugin configuration from parent to child -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>3.1.0</version>
+        <executions>
+          <execution>
+            <id>copy-jar</id>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <!-- Run during the child's package phase, after the JAR is produced -->
+            <phase>package</phase>
+            <configuration>
+              <target>
+				  <copy file="target/Item-NBT-API-OG-${project.version}.jar" overwrite="true" todir="../target"></copy>
+              </target>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- Existing plugin configurations remain as is -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
@@ -66,24 +98,21 @@
           </execution>
         </executions>
       </plugin>
-      <!-- Start and Stop a SpigotMC server automatically before and after the integration-test phase. -->
+
+      <!-- SpigotMC plugin and others remain unchanged -->
       <plugin>
         <groupId>de.tr7zw.spigotmc.maven</groupId>
         <artifactId>tr-spigotmc-maven-plugin</artifactId>
         <version>0.0.3-SNAPSHOT</version>
         <configuration>
-          <!-- 1.8.8-R0.1-SNAPSHOT-latest, 1.9.2-R0.1-SNAPSHOT-latest, 1.9.4-R0.1-SNAPSHOT-latest, 1.10.2-R0.1-SNAPSHOT-latest,1.11.2,1.12.2,1.13.2,1.14.4,1.15.1,1.16.1,1.16.2 -->
-          <versions>
-            https://repo.codemc.io/repository/nms/org/spigotmc/spigot/1.8.8-R0.1-SNAPSHOT/spigot-1.8.8-R0.1-20190527.160303-7.jar,
-          https://repo.codemc.io/repository/nms/org/spigotmc/spigot/1.9.4-R0.1-SNAPSHOT/spigot-1.9.4-R0.1-20190527.160755-2.jar,
-          https://repo.codemc.io/repository/nms/org/spigotmc/spigot/1.10.2-R0.1-SNAPSHOT/spigot-1.10.2-R0.1-20190527.154910-2.jar,
-          https://repo.codemc.io/repository/nms/org/spigotmc/spigot/1.11.2-R0.1-SNAPSHOT/spigot-1.11.2-R0.1-20191216.091129-1.jar,
-          https://repo.codemc.io/repository/nms/org/spigotmc/spigot/1.12.2-R0.1-SNAPSHOT/spigot-1.12.2-R0.1-20190527.155359-34.jar,
-            <!--https://repo.codemc.io/repository/nms/org/spigotmc/spigot/1.13.2-R0.1-SNAPSHOT/spigot-1.13.2-R0.1-20191113.201242-53.jar,-->
+          <versions>https://repo.codemc.io/repository/nms/org/spigotmc/spigot/1.8.8-R0.1-SNAPSHOT/spigot-1.8.8-R0.1-20190527.160303-7.jar,
+            https://repo.codemc.io/repository/nms/org/spigotmc/spigot/1.9.4-R0.1-SNAPSHOT/spigot-1.9.4-R0.1-20190527.160755-2.jar,
+            https://repo.codemc.io/repository/nms/org/spigotmc/spigot/1.10.2-R0.1-SNAPSHOT/spigot-1.10.2-R0.1-20190527.154910-2.jar,
+            https://repo.codemc.io/repository/nms/org/spigotmc/spigot/1.11.2-R0.1-SNAPSHOT/spigot-1.11.2-R0.1-20191216.091129-1.jar,
+            https://repo.codemc.io/repository/nms/org/spigotmc/spigot/1.12.2-R0.1-SNAPSHOT/spigot-1.12.2-R0.1-20190527.155359-34.jar,
             https://repo.codemc.io/repository/nms/org/spigotmc/spigot/1.14.4-R0.1-SNAPSHOT/spigot-1.14.4-R0.1-20191224.232152-15.jar,
-          https://repo.codemc.io/repository/nms/org/spigotmc/spigot/1.15.2-R0.1-SNAPSHOT/spigot-1.15.2-R0.1-20200625.172449-18.jar,
-          https://repo.codemc.io/repository/nms/org/spigotmc/spigot/1.16.5-R0.1-SNAPSHOT/spigot-1.16.5-R0.1-20210611.090701-17.jar
-          </versions>
+            https://repo.codemc.io/repository/nms/org/spigotmc/spigot/1.15.2-R0.1-SNAPSHOT/spigot-1.15.2-R0.1-20200625.172449-18.jar,
+            https://repo.codemc.io/repository/nms/org/spigotmc/spigot/1.16.5-R0.1-SNAPSHOT/spigot-1.16.5-R0.1-20210611.090701-17.jar</versions>
           <works>Success! This version of NBT-API</works>
           <error>WARNING! This version of NBT-API</error>
           <filename>item-nbt-api-plugin-${project.version}.jar</filename>
@@ -104,6 +133,7 @@
           </execution>
         </executions>
       </plugin>
+
       <plugin>
         <artifactId>nbtapi-javadoc-plugin</artifactId>
         <version>3.4.2-SNAPSHOT</version>
